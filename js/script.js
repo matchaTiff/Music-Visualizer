@@ -60,7 +60,7 @@ for(var i = 0; i < numCubes; i++) {
 var listener = new THREE.AudioListener();
 // create a global audio source
 var audio = new THREE.Audio(listener);
-var mediaElement = new Audio('music/end.ogg');
+var mediaElement = new Audio('music/trojans.ogg');
 
 // gets audio frequency
 var analyser = new THREE.AudioAnalyser(audio, fftSize);
@@ -100,7 +100,7 @@ function animation() {
 
   //Iterate through the bars and scale the z axis
   for (var i = 0; i < numCubes; i++) {
-    var value = freqArray[i * step] / 4;
+    var value = freqArray[i * step] / 16;
     value = value < 1 ? 1 : value;
     cubes[i].scale.y = value;
   }
@@ -117,9 +117,9 @@ var update = function() {
   // line.rotation.x += Math.abs(Math.cos(bpm)/25);
   // line.rotation.y += Math.abs(Math.cos(bpm)/70);
   var speed = Date.now() * 0.0004;
-  camera.position.x = Math.cos(speed) * 15;
-  camera.position.z = Math.sin(speed) * 15;
-  camera.position.y = 10;
+  camera.position.x = Math.cos(speed) * 13;
+  camera.position.z = Math.sin(speed) * 13;
+  camera.position.y = 5;
   camera.lookAt(scene.position);
 };
 
