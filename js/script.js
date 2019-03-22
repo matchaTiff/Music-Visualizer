@@ -23,7 +23,7 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 //_____________________________________________________________________________
 // variables
 
-var fftSize = 1024;
+var fftSize = 2048;
 
 // // create shape
 // var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
@@ -60,14 +60,10 @@ for(var i = 0; i < numCubes; i++) {
 var listener = new THREE.AudioListener();
 // create a global audio source
 var audio = new THREE.Audio(listener);
-var mediaElement = new Audio('music/trojans.ogg');
+var mediaElement = new Audio('music/in-the-woods.ogg');
 
 // gets audio frequency
 var analyser = new THREE.AudioAnalyser(audio, fftSize);
-
-//
-// analyser.data: A Uint8Array with size determined by
-// analyser.frequencyBinCount used to hold analysis data.
 
 // play button
 var startButton = document.getElementById('startButton');
@@ -98,24 +94,31 @@ function animation() {
 
   var step = Math.round(freqArray.length / numCubes);
 
-  //Iterate through the bars and scale the z axis
+  // render the cubes at different heights
   for (var i = 0; i < numCubes; i++) {
-    var value = freqArray[i * step] / 16;
+    // take frequency data and use it to determine the height of each cube
+    if(i == 7) {
+      value = freqArray[4 * step] / 16;
+    }
+    else if(i == 8) {
+      value = freqArray[3 * step] / 16;
+    }
+    else if(i == 9) {
+      value = freqArray[2 * step] / 16;
+    }
+    else {
+      var value = freqArray[i * step] / 16;
+    }
     value = value < 1 ? 1 : value;
     cubes[i].scale.y = value;
   }
 }
-
-// var data = analyser.getAverageFrequency();
-// var bpm = data * 60;
 
 //_____________________________________________________________________________
 
 // update: called every frame of whatever you're checking
 // (movement, events, etc)
 var update = function() {
-  // line.rotation.x += Math.abs(Math.cos(bpm)/25);
-  // line.rotation.y += Math.abs(Math.cos(bpm)/70);
   var speed = Date.now() * 0.0004;
   camera.position.x = Math.cos(speed) * 13;
   camera.position.z = Math.sin(speed) * 13;
@@ -123,14 +126,13 @@ var update = function() {
   camera.lookAt(scene.position);
 };
 
-// draws scene
 var render = function() {
   // update data in frequencyData
-  analyser.getFrequencyData();
+  //analyser.getFrequencyData();
   renderer.render(scene, camera);
 };
 
-// specifies how the game will be flowing
+// specifies how the program will be flowing
 // checks updates, processes it, renders it
 function animationLoop() {
   requestAnimationFrame(animationLoop);
