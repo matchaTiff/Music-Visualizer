@@ -1,5 +1,7 @@
 // what you'll be viewing
 var scene = new THREE.Scene();
+scene.background = new THREE.Color(0x324344);
+
 // camera: what user will see the world through
 // near clipping plane, far clipping plane
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth /
@@ -60,7 +62,7 @@ for(var i = 0; i < numCubes; i++) {
 var listener = new THREE.AudioListener();
 // create a global audio source
 var audio = new THREE.Audio(listener);
-var mediaElement = new Audio('music/in-the-woods.ogg');
+var mediaElement = new Audio('music/trojans.ogg');
 
 // gets audio frequency
 var analyser = new THREE.AudioAnalyser(audio, fftSize);
