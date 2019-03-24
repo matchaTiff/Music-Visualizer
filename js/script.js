@@ -87,14 +87,14 @@ function init() {
   var mediaElement = new Audio();
 
   var dir, ext, list;
-  dir = "music/";
-  ext = ".ogg";
+  dir = 'music/';
+  ext = '.ogg';
   list = document.getElementById("list");
   // whenever user changes anything on list, it changes track
   list.addEventListener("change", changeTrack);
   function changeTrack(event) {
     mediaElement.pause();
-    mediaElement = new Audio(dir+event.target.value+ext);
+    mediaElement = new Audio(event.target.value+ext);
     audio.setMediaElementSource(mediaElement);
     //audio.source = dir+event.target.value+ext;
     mediaElement.play();
