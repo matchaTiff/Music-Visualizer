@@ -25,7 +25,7 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 //_____________________________________________________________________________
 // variables
 
-var fftSize = 2048;
+var fftSize = 1024;
 
 // // create shape
 // var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
@@ -59,18 +59,13 @@ for(var i = 0; i < numCubes; i++) {
   scene.add(cubes[i]);
 }
 
-var listener = new THREE.AudioListener();
-// create a global audio source
-var audio = new THREE.Audio(listener);
-var mediaElement = new Audio('music/trojans.ogg');
-
-// gets audio frequency
-var analyser = new THREE.AudioAnalyser(audio, fftSize);
-
 // play button
 var startButton = document.getElementById('startButton');
-//startButton.addEventListener('click', init);
-startButton.addEventListener('click', animation);
+startButton.addEventListener('click', removeOverlay);
+
+window.addEventListener('load', initAudio);
+
+// startButton.addEventListener('click', animation);
 
 // startButton.addEventListener('click', function() {
 //   context.resume().then(() => {
@@ -80,22 +75,49 @@ startButton.addEventListener('click', animation);
 
 //_____________________________________________________________________________
 
-function init() {
-
+function removeOverlay() {
   // removes overlay after play is pressed
   var overlay = document.getElementById('overlay');
   overlay.remove();
-
-  mediaElement.loop = true;
-  mediaElement.play();
-  audio.setMediaElementSource(mediaElement);
-
-  // // add in the cube
-  // scene.add(line);
-
-  // change camera so its not on top of the cube
-  camera.position.y = 20;
 }
+
+var listener = new THREE.AudioListener();
+// create a global audio source
+var audio = new THREE.Audio(listener);
+// gets audio frequency
+var analyser = new THREE.AudioAnalyser(audio, fftSize);
+
+var mediaElement = new Audio();
+
+function initAudio() {
+  var dir, ext, list;
+  dir = "music/";
+  ext = ".ogg";
+  list = document.getElementById("list");
+  // whenever user changes anything on list, it changes track
+  list.addEventListener("change", changeTrack);
+  function changeTrack(event) {
+    mediaElement.pause();
+    mediaElement = new Audio(dir+event.target.value+ext);
+    audio.setMediaElementSource(mediaElement);
+    //audio.source = dir+event.target.value+ext;
+    mediaElement.play();
+  }
+}
+
+// function init() {
+//   var mediaElement = new Audio('music/trojans.ogg');
+//
+//   mediaElement.play();
+//   mediaElement.loop = true;
+//   audio.setMediaElementSource(mediaElement);
+//
+//   // // add in the cube
+//   // scene.add(line);
+//
+//   // change camera so its not on top of the cube
+//   camera.position.y = 20;
+// }
 
 function animation() {
   var freqArray = analyser.getFrequencyData();
