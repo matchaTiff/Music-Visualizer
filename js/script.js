@@ -94,7 +94,7 @@ function init() {
   list.addEventListener("change", changeTrack);
   function changeTrack(event) {
     mediaElement.pause();
-    mediaElement = new Audio(event.target.value+ext);
+    mediaElement = new Audio(dir+event.target.value+ext);
     audio.setMediaElementSource(mediaElement);
     //audio.source = dir+event.target.value+ext;
     mediaElement.play();
