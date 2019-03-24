@@ -71,12 +71,6 @@ var audio;
 // gets audio frequency
 var analyser;
 
-// startButton.addEventListener('click', function() {
-//   context.resume().then(() => {
-//     console.log('Playback resumed successfully');
-// });
-// });
-
 //_____________________________________________________________________________
 
 function init() {
@@ -93,8 +87,8 @@ function init() {
   var mediaElement = new Audio();
 
   var dir, ext, list;
-  dir = "music/";
-  ext = ".ogg";
+  dir = 'music/';
+  ext = '.ogg';
   list = document.getElementById("list");
   // whenever user changes anything on list, it changes track
   list.addEventListener("change", changeTrack);
