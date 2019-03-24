@@ -25,7 +25,7 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 //_____________________________________________________________________________
 // variables
 
-var fftSize = 1024;
+var fftSize = 2048;
 
 // // create shape
 // var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
@@ -61,11 +61,15 @@ for(var i = 0; i < numCubes; i++) {
 
 // play button
 var startButton = document.getElementById('startButton');
-startButton.addEventListener('click', removeOverlay);
-
-window.addEventListener('load', initAudio);
-
+startButton.addEventListener('click', init);
 // startButton.addEventListener('click', animation);
+
+var listener;
+// create a global audio source
+var audio;
+
+// gets audio frequency
+var analyser;
 
 // startButton.addEventListener('click', function() {
 //   context.resume().then(() => {
@@ -75,21 +79,19 @@ window.addEventListener('load', initAudio);
 
 //_____________________________________________________________________________
 
-function removeOverlay() {
+function init() {
   // removes overlay after play is pressed
   var overlay = document.getElementById('overlay');
   overlay.remove();
-}
 
-var listener = new THREE.AudioListener();
+  listener = new THREE.AudioListener();
 // create a global audio source
-var audio = new THREE.Audio(listener);
+  audio = new THREE.Audio(listener);
+
 // gets audio frequency
-var analyser = new THREE.AudioAnalyser(audio, fftSize);
+  analyser = new THREE.AudioAnalyser(audio, fftSize);
+  var mediaElement = new Audio();
 
-var mediaElement = new Audio();
-
-function initAudio() {
   var dir, ext, list;
   dir = "music/";
   ext = ".ogg";
@@ -103,10 +105,21 @@ function initAudio() {
     //audio.source = dir+event.target.value+ext;
     mediaElement.play();
   }
+  animationLoop();
 }
 
 // function init() {
+//   listener = new THREE.AudioListener();
+// // create a global audio source
+//   audio = new THREE.Audio(listener);
+//
+// // gets audio frequency
+//   analyser = new THREE.AudioAnalyser(audio, fftSize);
 //   var mediaElement = new Audio('music/trojans.ogg');
+//
+//   // removes overlay after play is pressed
+//   var overlay = document.getElementById('overlay');
+//   overlay.remove();
 //
 //   mediaElement.play();
 //   mediaElement.loop = true;
@@ -117,6 +130,7 @@ function initAudio() {
 //
 //   // change camera so its not on top of the cube
 //   camera.position.y = 20;
+//   animationLoop();
 // }
 
 function animation() {
@@ -172,4 +186,3 @@ function animationLoop() {
   //console.log(analyser.getFrequencyData());
   //console.log(bpm);
 }
-animationLoop();
