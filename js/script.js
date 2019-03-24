@@ -71,12 +71,6 @@ var audio;
 // gets audio frequency
 var analyser;
 
-// startButton.addEventListener('click', function() {
-//   context.resume().then(() => {
-//     console.log('Playback resumed successfully');
-// });
-// });
-
 //_____________________________________________________________________________
 
 function init() {
