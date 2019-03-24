@@ -69,8 +69,14 @@ var analyser = new THREE.AudioAnalyser(audio, fftSize);
 
 // play button
 var startButton = document.getElementById('startButton');
-startButton.addEventListener('click', init);
+//startButton.addEventListener('click', init);
 startButton.addEventListener('click', animation);
+
+// startButton.addEventListener('click', function() {
+//   context.resume().then(() => {
+//     console.log('Playback resumed successfully');
+// });
+// });
 
 //_____________________________________________________________________________
 
